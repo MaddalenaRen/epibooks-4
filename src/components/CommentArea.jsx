@@ -13,8 +13,8 @@ const CommentArea = ({ asin }) => {
     const fetchComments = async () => {
       setIsLoading(true);
       try {
-        let response = await fetch(
-          `https://striveschool-api.herokuapp.com/api/comments/${asin}`,
+        const response = await fetch(
+          "https://striveschool-api.herokuapp.com/api/comments/" + asin,
           {
             headers: {
               Authorization:
@@ -22,8 +22,9 @@ const CommentArea = ({ asin }) => {
             },
           }
         );
+
         if (response.ok) {
-          let commentsData = await response.json();
+          const commentsData = await response.json();
           setComments(commentsData);
           setIsLoading(false);
           setIsError(false);
@@ -32,13 +33,15 @@ const CommentArea = ({ asin }) => {
           setIsError(true);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setIsLoading(false);
         setIsError(true);
       }
     };
 
-    fetchComments();
+    if (asin) {
+      fetchComments();
+    }
   }, [asin]);
 
   return (

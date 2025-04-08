@@ -1,25 +1,21 @@
-import { useState, useEffect } from "react";
-import { Component } from "react";
+import { useState } from "react";
 import { Card } from "react-bootstrap";
-// import CommentArea from './CommentArea'
 
 const SingleBook = ({ book, changeSelectedBook }) => {
   const [selectedBook, setSelectedBook] = useState(false);
+
   const handleClick = () => {
     setSelectedBook(!selectedBook);
     changeSelectedBook(book.asin);
   };
-  // state = {
-  //   selected: false,
-  // }
 
   return (
     <>
       <Card
-        // onClick={() => this.setState({ selected: !this.state.selected })}
-        onClick={() => handleClick}
+        onClick={handleClick}
         style={{
-          border: selectedBook === book.asin ? "3px solid red" : "none",
+          border: selectedBook ? "3px solid red" : "none",
+          cursor: "pointer",
         }}
       >
         <Card.Img variant="top" src={book.img} />
@@ -27,7 +23,6 @@ const SingleBook = ({ book, changeSelectedBook }) => {
           <Card.Title style={{ color: "black" }}>{book.title}</Card.Title>
         </Card.Body>
       </Card>
-      {/* {this.state.selected && <CommentArea asin={this.props.book.asin} />} */}
     </>
   );
 };
