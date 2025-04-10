@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import CommentList from "./CommentList";
 import AddComment from "./AddComment";
 import Loading from "./Loading";
@@ -10,42 +10,42 @@ const CommentArea = ({ asin }) => {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const fetchComments = async () => {
+    const getComments = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
+        let response = await fetch(
           "https://striveschool-api.herokuapp.com/api/comments/" + asin,
           {
             headers: {
               Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Y1MTY3ODgxYjBkZDAwMTUwYTdhN2EiLCJpYXQiOjE3NDQxMTUzMjAsImV4cCI6MTc0NTMyNDkyMH0.t2jjf0t-OtsO82jjbj54deP3kO3WJuXh3MPI-VF7QSE",
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Y3YjdkZDcwN2YwOTAwMTU5NDc3OWMiLCJpYXQiOjE3NDQyODc3MDksImV4cCI6MTc0NTQ5NzMwOX0.tsWv-Zf6_HCoLE4N7JZ62gr50vGLL-SaEC-XKnlpks8",
             },
           }
         );
-
+        console.log(response);
         if (response.ok) {
-          const commentsData = await response.json();
-          setComments(commentsData);
+          let comments = await response.json();
+          setComments(comments);
           setIsLoading(false);
           setIsError(false);
         } else {
+          console.log("error");
           setIsLoading(false);
           setIsError(true);
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
         setIsLoading(false);
         setIsError(true);
       }
     };
-
     if (asin) {
-      fetchComments();
+      getComments();
     }
   }, [asin]);
 
   return (
-    <div className="text-center">
+    <div className="text-center" data-testId="comment-area">
       {isLoading && <Loading />}
       {isError && <Error />}
       <AddComment asin={asin} />

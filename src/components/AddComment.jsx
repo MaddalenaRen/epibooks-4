@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
 const AddComment = ({ asin }) => {
   const [comment, setComment] = useState({
     comment: "",
     rate: 1,
-    elementId: asin,
+    elementId: null,
   });
 
   useEffect(() => {
-    setComment((prevComment) => ({
-      ...prevComment,
+    setComment((c) => ({
+      ...c,
       elementId: asin,
     }));
   }, [asin]);
@@ -26,7 +26,7 @@ const AddComment = ({ asin }) => {
           headers: {
             "Content-type": "application/json",
             Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Y1MTY3ODgxYjBkZDAwMTUwYTdhN2EiLCJpYXQiOjE3NDQxMTUzMjAsImV4cCI6MTc0NTMyNDkyMH0.t2jjf0t-OtsO82jjbj54deP3kO3WJuXh3MPI-VF7QSE",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2Y3YjdkZDcwN2YwOTAwMTU5NDc3OWMiLCJpYXQiOjE3NDQyODc3MDksImV4cCI6MTc0NTQ5NzMwOX0.tsWv-Zf6_HCoLE4N7JZ62gr50vGLL-SaEC-XKnlpks8",
           },
         }
       );
@@ -35,7 +35,7 @@ const AddComment = ({ asin }) => {
         setComment({
           comment: "",
           rate: 1,
-          elementId: asin,
+          elementId: null,
         });
       } else {
         throw new Error("Qualcosa è andato storto");
@@ -47,6 +47,7 @@ const AddComment = ({ asin }) => {
 
   return (
     <div className="my-3">
+      <h3>Aggiungi commento</h3>
       <Form onSubmit={sendComment}>
         <Form.Group className="mb-2">
           <Form.Label>Recensione</Form.Label>

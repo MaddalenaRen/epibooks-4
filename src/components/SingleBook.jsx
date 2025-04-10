@@ -1,21 +1,13 @@
-import { useState } from "react";
 import { Card } from "react-bootstrap";
 
-const SingleBook = ({ book, changeSelectedBook }) => {
-  const [selectedBook, setSelectedBook] = useState(false);
-
-  const handleClick = () => {
-    setSelectedBook(!selectedBook);
-    changeSelectedBook(book.asin);
-  };
-
+const SingleBook = ({ changeSelectedBook, selectedBook, book }) => {
   return (
     <>
       <Card
-        onClick={handleClick}
+        data-testid="single-book"
+        onClick={() => changeSelectedBook(book.asin)}
         style={{
-          border: selectedBook ? "3px solid red" : "none",
-          cursor: "pointer",
+          border: selectedBook === book.asin ? "3px solid red" : "none",
         }}
       >
         <Card.Img variant="top" src={book.img} />
